@@ -956,7 +956,7 @@ namespace MatBindings {
 
     bool unwrapOptionalArgs(Nan::NAN_METHOD_ARGS_TYPE info) {
       return (
-        Mat::Converter::arg(1, &mask, info) ||
+        Mat::Converter::optArg(1, &mask, info)
       );
     }
   };
