@@ -935,7 +935,7 @@ namespace MatBindings {
     }
 
     double alpha;
-    cv::Mat mask;
+    cv::Mat mask = cv::noArray().getMat();
 
     cv::Mat dst;
 
@@ -950,13 +950,14 @@ namespace MatBindings {
 
     bool unwrapRequiredArgs(Nan::NAN_METHOD_ARGS_TYPE info) {
       return (
-        DoubleConverter::arg(0, &alpha, info)
+        Mat::Converter::arg(0, &dst, info) ||
+        DoubleConverter::arg(1, &alpha, info)
       );
     }
 
     bool unwrapOptionalArgs(Nan::NAN_METHOD_ARGS_TYPE info) {
       return (
-        Mat::Converter::optArg(1, &mask, info)
+        Mat::Converter::optArg(2, &mask, info)
       );
     }
   };
