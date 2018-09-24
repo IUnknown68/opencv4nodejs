@@ -126,6 +126,8 @@ public:
   static NAN_METHOD(CopyMakeBorderAsync);
   static NAN_METHOD(Reduce);
   static NAN_METHOD(ReduceAsync);
+  static NAN_METHOD(AccumulateWeighted);
+  static NAN_METHOD(AccumulateWeightedAsync);
 #if CV_VERSION_MINOR > 1
   static NAN_METHOD(Rotate);
   static NAN_METHOD(RotateAsync);
