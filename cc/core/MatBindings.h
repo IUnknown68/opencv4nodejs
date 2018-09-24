@@ -927,6 +927,40 @@ namespace MatBindings {
 	  }
   };
 
+  struct AccumulateWeightedWorker : public CatchCvExceptionWorker {
+  public:
+    cv::Mat self;
+    AccumulateWeightedWorker(cv::Mat self) {
+      this->self = self;
+    }
+
+    double alpha;
+    cv::Mat mask;
+
+    cv::Mat dst;
+
+    std::string executeCatchCvExceptionWorker() {
+      cv::accumulateWeighted(self, dst, alpha, mask);
+      return "";
+    }
+
+    v8::Local<v8::Value> getReturnValue() {
+      return Mat::Converter::wrap(dst);
+    }
+
+    bool unwrapRequiredArgs(Nan::NAN_METHOD_ARGS_TYPE info) {
+      return (
+        DoubleConverter::arg(0, &alpha, info)
+      );
+    }
+
+    bool unwrapOptionalArgs(Nan::NAN_METHOD_ARGS_TYPE info) {
+      return (
+        Mat::Converter::arg(1, &mask, info) ||
+      );
+    }
+  };
+
 #if CV_VERSION_MINOR > 1
   struct RotateWorker : public OpWithCodeWorker {
   public:

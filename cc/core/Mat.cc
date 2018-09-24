@@ -95,6 +95,8 @@ NAN_MODULE_INIT(Mat::Init) {
   Nan::SetPrototypeMethod(ctor, "copyMakeBorderAsync", CopyMakeBorderAsync);
   Nan::SetPrototypeMethod(ctor, "reduce", Reduce);
   Nan::SetPrototypeMethod(ctor, "reduceAsync", ReduceAsync);
+  Nan::SetPrototypeMethod(ctor, "accumulateWeighted", AccumulateWeighted);
+  Nan::SetPrototypeMethod(ctor, "accumulateWeightedAsync", AccumulateWeightedAsync);
 #if CV_VERSION_MINOR > 1
   Nan::SetPrototypeMethod(ctor, "rotate", Rotate);
   Nan::SetPrototypeMethod(ctor, "rotateAsync", RotateAsync);
@@ -857,6 +859,22 @@ NAN_METHOD(Mat::ReduceAsync) {
 		"Mat::ReduceAsync",
 		info
 	);
+}
+
+NAN_METHOD(Mat::AccumulateWeighted) {
+  FF::SyncBinding(
+    std::make_shared<MatBindings::AccumulateWeightedWorker>(Mat::Converter::unwrap(info.This())),
+    "Mat::AccumulateWeighted",
+    info
+  );
+}
+
+NAN_METHOD(Mat::AccumulateWeightedAsync) {
+  FF::AsyncBinding(
+    std::make_shared<MatBindings::AccumulateWeightedWorker>(Mat::Converter::unwrap(info.This())),
+    "Mat::AccumulateWeightedAsync",
+    info
+  );
 }
 
 #if CV_VERSION_MINOR > 1
