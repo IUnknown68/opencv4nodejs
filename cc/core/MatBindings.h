@@ -927,6 +927,108 @@ namespace MatBindings {
 	  }
   };
 
+  struct AccumulateWorker : public CatchCvExceptionWorker {
+  public:
+    cv::Mat self;
+    AccumulateWorker(cv::Mat self) {
+      this->self = self;
+    }
+
+    cv::Mat mask = cv::noArray().getMat();
+
+    cv::Mat dst;
+
+    std::string executeCatchCvExceptionWorker() {
+      cv::accumulate(self, dst, mask);
+      return "";
+    }
+
+    v8::Local<v8::Value> getReturnValue() {
+      return Mat::Converter::wrap(dst);
+    }
+
+    bool unwrapRequiredArgs(Nan::NAN_METHOD_ARGS_TYPE info) {
+      return (
+        Mat::Converter::arg(0, &dst, info)
+      );
+    }
+
+    bool unwrapOptionalArgs(Nan::NAN_METHOD_ARGS_TYPE info) {
+      return (
+        Mat::Converter::optArg(2, &mask, info)
+      );
+    }
+  };
+
+  struct AccumulateProductWorker : public CatchCvExceptionWorker {
+  public:
+    cv::Mat self;
+    AccumulateProductWorker(cv::Mat self) {
+      this->self = self;
+    }
+
+    double alpha;
+    cv::Mat src2;
+    cv::Mat mask = cv::noArray().getMat();
+
+    cv::Mat dst;
+
+    std::string executeCatchCvExceptionWorker() {
+      cv::accumulateProduct(self, src2, dst, mask);
+      return "";
+    }
+
+    v8::Local<v8::Value> getReturnValue() {
+      return Mat::Converter::wrap(dst);
+    }
+
+    bool unwrapRequiredArgs(Nan::NAN_METHOD_ARGS_TYPE info) {
+      return (
+        Mat::Converter::arg(0, &src2, info) ||
+        Mat::Converter::arg(1, &dst, info)
+      );
+    }
+
+    bool unwrapOptionalArgs(Nan::NAN_METHOD_ARGS_TYPE info) {
+      return (
+        Mat::Converter::optArg(2, &mask, info)
+      );
+    }
+  };
+
+  struct AccumulateSquareWorker : public CatchCvExceptionWorker {
+  public:
+    cv::Mat self;
+    AccumulateWorker(cv::Mat self) {
+      this->self = self;
+    }
+
+    cv::Mat mask = cv::noArray().getMat();
+
+    cv::Mat dst;
+
+    std::string executeCatchCvExceptionWorker() {
+      cv::accumulateSquare(self, dst, mask);
+      return "";
+    }
+
+    v8::Local<v8::Value> getReturnValue() {
+      return Mat::Converter::wrap(dst);
+    }
+
+    bool unwrapRequiredArgs(Nan::NAN_METHOD_ARGS_TYPE info) {
+      return (
+        Mat::Converter::arg(0, &dst, info)
+      );
+    }
+
+    bool unwrapOptionalArgs(Nan::NAN_METHOD_ARGS_TYPE info) {
+      return (
+        Mat::Converter::optArg(2, &mask, info)
+      );
+    }
+  };
+
   struct AccumulateWeightedWorker : public CatchCvExceptionWorker {
   public:
     cv::Mat self;

@@ -95,6 +95,12 @@ NAN_MODULE_INIT(Mat::Init) {
   Nan::SetPrototypeMethod(ctor, "copyMakeBorderAsync", CopyMakeBorderAsync);
   Nan::SetPrototypeMethod(ctor, "reduce", Reduce);
   Nan::SetPrototypeMethod(ctor, "reduceAsync", ReduceAsync);
+  Nan::SetPrototypeMethod(ctor, "accumulate", Accumulate);
+  Nan::SetPrototypeMethod(ctor, "accumulateAsync", AccumulateAsync);
+  Nan::SetPrototypeMethod(ctor, "accumulateProduct", AccumulateProduct);
+  Nan::SetPrototypeMethod(ctor, "accumulateProductAsync", AccumulateProductAsync);
+  Nan::SetPrototypeMethod(ctor, "accumulateSquare", AccumulateSquare);
+  Nan::SetPrototypeMethod(ctor, "accumulateSquareAsync", AccumulateSquareAsync);
   Nan::SetPrototypeMethod(ctor, "accumulateWeighted", AccumulateWeighted);
   Nan::SetPrototypeMethod(ctor, "accumulateWeightedAsync", AccumulateWeightedAsync);
 #if CV_VERSION_MINOR > 1
@@ -859,6 +865,54 @@ NAN_METHOD(Mat::ReduceAsync) {
 		"Mat::ReduceAsync",
 		info
 	);
+}
+
+NAN_METHOD(Mat::Accumulate) {
+  FF::SyncBinding(
+    std::make_shared<MatBindings::AccumulateWorker>(Mat::Converter::unwrap(info.This())),
+    "Mat::Accumulate",
+    info
+  );
+}
+
+NAN_METHOD(Mat::AccumulateAsync) {
+  FF::AsyncBinding(
+    std::make_shared<MatBindings::AccumulateWorker>(Mat::Converter::unwrap(info.This())),
+    "Mat::AccumulateAsync",
+    info
+  );
+}
+
+NAN_METHOD(Mat::AccumulateProduct) {
+  FF::SyncBinding(
+    std::make_shared<MatBindings::AccumulateProductWorker>(Mat::Converter::unwrap(info.This())),
+    "Mat::AccumulateProduct",
+    info
+  );
+}
+
+NAN_METHOD(Mat::AccumulateProductAsync) {
+  FF::AsyncBinding(
+    std::make_shared<MatBindings::AccumulateProductWorker>(Mat::Converter::unwrap(info.This())),
+    "Mat::AccumulateProductAsync",
+    info
+  );
+}
+
+NAN_METHOD(Mat::AccumulateSquare) {
+  FF::SyncBinding(
+    std::make_shared<MatBindings::AccumulateSquareWorker>(Mat::Converter::unwrap(info.This())),
+    "Mat::AccumulateSquare",
+    info
+  );
+}
+
+NAN_METHOD(Mat::AccumulateSquareAsync) {
+  FF::AsyncBinding(
+    std::make_shared<MatBindings::AccumulateSquareWorker>(Mat::Converter::unwrap(info.This())),
+    "Mat::AccumulateSquareAsync",
+    info
+  );
 }
 
 NAN_METHOD(Mat::AccumulateWeighted) {
